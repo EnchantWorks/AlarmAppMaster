@@ -11,8 +11,14 @@ import UIKit
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
+    
+    @IBOutlet weak var _switch: UISwitch! //スイッチ
+    @IBAction func changed(sender: UISwitch) {
+        if _switch.on == false {
+            showAlert("", text: "目覚ましかけろよ")
+        }
 
-
+    }
     var detailItem: AnyObject? {
         didSet {
             // Update the view.
@@ -27,6 +33,12 @@ class DetailViewController: UIViewController {
                 label.text = detail.valueForKey("timeStamp")!.description
             }
         }
+    }
+    
+    func showAlert(title: NSString?, text: NSString?){
+        let alert = UIAlertController(title: title, message: text,preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
