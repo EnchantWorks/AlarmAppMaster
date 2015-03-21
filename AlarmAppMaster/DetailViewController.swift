@@ -10,18 +10,18 @@ import UIKit
 import AVFoundation
 
 class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-    var _player = [AVAudioPlayer]()
-    let dateFormatter: NSDateFormatter = NSDateFormatter()
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
+    var _player = [AVAudioPlayer]() //音楽再生のプレイヤー
+    let dateFormatter: NSDateFormatter = NSDateFormatter() //日付のフォーマットを決めるもの
+    @IBOutlet weak var detailDescriptionLabel: UILabel! //これは知らん
     @IBOutlet weak var _switch: UISwitch! //スイッチ部品の接続
-    var _pickersrow:Int = 0
-    var timer: NSTimer?
-    @IBOutlet weak var datePicker: UIDatePicker!
-    @IBAction func changed(sender: UISwitch) {//スイッチがon,offの切り替えに関するメソッド
+    var _pickersrow:Int = 0 //アラーム音のピッカーが何番目の曲を指しているか
+    var timer: NSTimer? //１秒周期で現在時刻を計測するために使う
+    @IBOutlet weak var datePicker: UIDatePicker! //datepickerのoutlet
+    @IBAction func changed(sender: UISwitch) { //スイッチのon,offの切り替えに関するメソッド
         if _switch.on == true {
-            setPickerEnabled(false, pick: false)
+            setPickerEnabled(false, pick: false) //スイッチがonならpickerの操作を出来ないようにする
             self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
-            }else{
+        }else{
             setPickerEnabled(true, pick: true)
             _player[_pickersrow].stop()
         }
@@ -33,10 +33,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         myDateFormatter.dateFormat = "hh:mm"
         var nowDate: NSString = myDateFormatter.stringFromDate(now)
         if mySelectedDate == nowDate {
-            showAlert("", text: "試しに鳴らしてみた")
             _player[_pickersrow].numberOfLoops = 999
             _player[_pickersrow].currentTime = 0
             _player[_pickersrow].play()
+            timer?.invalidate()
+            timer = nil
         }
     }
     let myDateFormatter: NSDateFormatter = NSDateFormatter()
@@ -70,7 +71,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     // 表示する値の配列.
-    var myValues: NSArray = ["アラーム１","アラーム2"]
+    var myValues: NSArray = ["アラーム１","アラーム2","おまけ１","おまけ２"]
     /*************************************************/
     var detailItem: AnyObject? {
         didSet {
@@ -103,6 +104,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         self.configureView()
         _player.append(makeAudioPlayer("Alarm1.mp3"))
         _player.append(makeAudioPlayer("Alarm2.mp3"))
+        _player.append(makeAudioPlayer("Alarm3.mp3"))
+        _player.append(makeAudioPlayer("Alarm4.mp3"))
         setPickerEnabled(true, pick: true)
     }
 
