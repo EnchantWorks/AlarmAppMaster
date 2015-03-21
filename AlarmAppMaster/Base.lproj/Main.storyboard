@@ -47,7 +47,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="Ah7-4n-0Wa" kind="show" identifier="showDetail" id="jUr-3t-vfg"/>
+                                    <segue destination="Ah7-4n-0Wa" kind="showDetail" identifier="showDetail" id="jUr-3t-vfg"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -80,6 +80,9 @@
                                 <date key="date" timeIntervalSinceReferenceDate="448568017.06552798">
                                     <!--2015-03-20 18:13:37 +0000-->
                                 </date>
+                                <connections>
+                                    <action selector="onDidChangeDate:" destination="Ah7-4n-0Wa" eventType="valueChanged" id="tc6-oV-BvZ"/>
+                                </connections>
                             </datePicker>
                             <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1jl-ZA-OK3">
                                 <rect key="frame" x="0.0" y="313" width="600" height="162"/>
@@ -107,11 +110,12 @@
                     <connections>
                         <outlet property="_picker" destination="1jl-ZA-OK3" id="kS6-eb-qc9"/>
                         <outlet property="_switch" destination="yjM-6a-rxz" id="txO-DL-grb"/>
+                        <outlet property="datePicker" destination="UeB-TP-VuS" id="kDE-OD-pMn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1343" y="64"/>
+            <point key="canvasLocation" x="1547" y="76"/>
         </scene>
     </scenes>
 </document>

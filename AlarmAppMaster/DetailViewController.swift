@@ -11,21 +11,39 @@ import AVFoundation
 
 class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     var _player = [AVAudioPlayer]()
+    let dateFormatter: NSDateFormatter = NSDateFormatter()
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var _switch: UISwitch! //スイッチ部品の接続
     var _pickersrow:Int = 0
-    var pickernum:Int = 0
-    @IBAction func changed(sender: UISwitch) {
+    var timer: NSTimer?
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBAction func changed(sender: UISwitch) {//スイッチがon,offの切り替えに関するメソッド
         if _switch.on == true {
-            pickernum = _pickersrow
-            showAlert("", text: "試しに鳴らしてみた")
-            _player[pickernum].numberOfLoops = 999
-            _player[pickernum].currentTime = 0
-            _player[pickernum].play()
-        }else{
-            _player[pickernum].stop()
+            setPickerEnabled(false, pick: false)
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+            }else{
+            setPickerEnabled(true, pick: true)
+            _player[_pickersrow].stop()
         }
 
+    }
+    
+    func update(){
+        var now = NSDate()
+        myDateFormatter.dateFormat = "hh:mm"
+        var nowDate: NSString = myDateFormatter.stringFromDate(now)
+        if mySelectedDate == nowDate {
+            showAlert("", text: "試しに鳴らしてみた")
+            _player[_pickersrow].numberOfLoops = 999
+            _player[_pickersrow].currentTime = 0
+            _player[_pickersrow].play()
+        }
+    }
+    let myDateFormatter: NSDateFormatter = NSDateFormatter()
+    var mySelectedDate: NSString = ""
+    @IBAction func onDidChangeDate(sender: UIDatePicker){
+        myDateFormatter.dateFormat = "hh:mm"
+        mySelectedDate = myDateFormatter.stringFromDate(sender.date)
     }
     
     /************UIPicker************/
@@ -51,17 +69,16 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         println("value: \(myValues[row])")
     }
     
-    
     // 表示する値の配列.
     var myValues: NSArray = ["アラーム１","アラーム2"]
-    
+    /*************************************************/
     var detailItem: AnyObject? {
         didSet {
             // Update the view.
             self.configureView()
         }
     }
-
+    
     func configureView() {
         // Update the user interface for the detail item.
         if let detail: AnyObject = self.detailItem {
@@ -71,6 +88,8 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
+    
+    //アラートの表示メソッド
     func showAlert(title: NSString?, text: NSString?){
         let alert = UIAlertController(title: title, message: text,preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -80,10 +99,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.configureView()
         //プレイヤーの生成
+        self.configureView()
         _player.append(makeAudioPlayer("Alarm1.mp3"))
         _player.append(makeAudioPlayer("Alarm2.mp3"))
+        setPickerEnabled(true, pick: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,6 +117,11 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let url = NSURL.fileURLWithPath(path!)
         
         return AVAudioPlayer(contentsOfURL: url, error: nil)
+    }
+    
+    func setPickerEnabled(date:Bool, pick:Bool) {
+        self.datePicker.userInteractionEnabled = date
+        self._picker.userInteractionEnabled = pick
     }
 }
 
