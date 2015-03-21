@@ -20,31 +20,34 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBAction func changed(sender: UISwitch) { //スイッチのon,offの切り替えに関するメソッド
         if _switch.on == true {
             setPickerEnabled(false, pick: false) //スイッチがonならpickerの操作を出来ないようにする
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("update"), userInfo: nil, repeats: true)//このメソッドでupdate()を１秒に１回実行する（実際にはセットした時間までは特に何も起きない）
         }else{
-            setPickerEnabled(true, pick: true)
-            _player[_pickersrow].stop()
+            setPickerEnabled(true, pick: true)//スイッチがオフなのでpickerの操作を可能に
+            _player[_pickersrow].stop()//曲を止める
         }
 
     }
     
     func update(){
-        var now = NSDate()
-        myDateFormatter.dateFormat = "hh:mm"
-        var nowDate: NSString = myDateFormatter.stringFromDate(now)
-        if mySelectedDate == nowDate {
-            _player[_pickersrow].numberOfLoops = 999
-            _player[_pickersrow].currentTime = 0
-            _player[_pickersrow].play()
-            timer?.invalidate()
+        var now = NSDate()//現在時刻
+        myDateFormatter.dateFormat = "hh:mm"//ここで時間のフォーマットを”何時:何分”としている
+        var nowDate: NSString = myDateFormatter.stringFromDate(now)//現在時刻を”何時:何分”というフォーマットに変換
+        if mySelectedDate == nowDate {//セットした時間になったら起動
+            _player[_pickersrow].numberOfLoops = 999//ループ回数
+            _player[_pickersrow].currentTime = 0//曲のスタート時間
+            _player[_pickersrow].play()//曲の始まり
+            timer?.invalidate()//タイマーを切るためのもの、この文と下の文がないとアラームが永遠に鳴り続ける
             timer = nil
         }
     }
+    
+    /**************UIDatePicker*****************/
+    
     let myDateFormatter: NSDateFormatter = NSDateFormatter()
     var mySelectedDate: NSString = ""
     @IBAction func onDidChangeDate(sender: UIDatePicker){
         myDateFormatter.dateFormat = "hh:mm"
-        mySelectedDate = myDateFormatter.stringFromDate(sender.date)
+        mySelectedDate = myDateFormatter.stringFromDate(sender.date)//datepickerでセットした時間を取得
     }
     
     /************UIPicker************/
@@ -72,7 +75,10 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     // 表示する値の配列.
     var myValues: NSArray = ["アラーム１","アラーム2","おまけ１","おまけ２"]
+    
     /*************************************************/
+    
+    //ここら辺は知らん
     var detailItem: AnyObject? {
         didSet {
             // Update the view.
@@ -90,22 +96,24 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     
-    //アラートの表示メソッド
+    //アラートの表示メソッド　今は使ってないけど、のちのち使うかもと思って置いてある
     func showAlert(title: NSString?, text: NSString?){
         let alert = UIAlertController(title: title, message: text,preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
 
-    override func viewDidLoad() {
+    override func viewDidLoad() {//DetailViewに遷移してきた時に行われるもの
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        //プレイヤーの生成
         self.configureView()
+        
+        //プレイヤーの生成
         _player.append(makeAudioPlayer("Alarm1.mp3"))
         _player.append(makeAudioPlayer("Alarm2.mp3"))
         _player.append(makeAudioPlayer("Alarm3.mp3"))
         _player.append(makeAudioPlayer("Alarm4.mp3"))
+        
         setPickerEnabled(true, pick: true)
     }
 
@@ -122,6 +130,7 @@ class DetailViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         return AVAudioPlayer(contentsOfURL: url, error: nil)
     }
     
+    //Pickerの有効化/無効化
     func setPickerEnabled(date:Bool, pick:Bool) {
         self.datePicker.userInteractionEnabled = date
         self._picker.userInteractionEnabled = pick
