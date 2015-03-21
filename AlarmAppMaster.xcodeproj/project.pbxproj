@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2D888741ABD5F7D00658BC9 /* Alarm1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C2D888731ABD5F7D00658BC9 /* Alarm1.mp3 */; };
+		C2D888761ABD643700658BC9 /* Alarm2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C2D888751ABD643700658BC9 /* Alarm2.mp3 */; };
 		F84FE6551AB963E2002C40D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84FE6541AB963E2002C40D0 /* AppDelegate.swift */; };
 		F84FE6581AB963E2002C40D0 /* AlarmAppMaster.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F84FE6561AB963E2002C40D0 /* AlarmAppMaster.xcdatamodeld */; };
 		F84FE65A1AB963E2002C40D0 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84FE6591AB963E2002C40D0 /* MasterViewController.swift */; };
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C2D888731ABD5F7D00658BC9 /* Alarm1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Alarm1.mp3; sourceTree = "<group>"; };
+		C2D888751ABD643700658BC9 /* Alarm2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Alarm2.mp3; sourceTree = "<group>"; };
 		F84FE64F1AB963E2002C40D0 /* AlarmAppMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlarmAppMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F84FE6531AB963E2002C40D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F84FE6541AB963E2002C40D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +100,8 @@
 		F84FE6521AB963E2002C40D0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C2D888731ABD5F7D00658BC9 /* Alarm1.mp3 */,
+				C2D888751ABD643700658BC9 /* Alarm2.mp3 */,
 				F84FE6531AB963E2002C40D0 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -198,9 +204,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2D888761ABD643700658BC9 /* Alarm2.mp3 in Resources */,
 				F84FE65F1AB963E2002C40D0 /* Main.storyboard in Resources */,
 				F84FE6641AB963E2002C40D0 /* LaunchScreen.xib in Resources */,
 				F84FE6611AB963E2002C40D0 /* Images.xcassets in Resources */,
+				C2D888741ABD5F7D00658BC9 /* Alarm1.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +421,7 @@
 				F84FE6751AB963E2002C40D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F84FE6761AB963E2002C40D0 /* Build configuration list for PBXNativeTarget "AlarmAppMasterTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +430,7 @@
 				F84FE6781AB963E2002C40D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
